@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Sent | Awais Altaf</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;700&display=swap');
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #22d3ee;
+            --dark: #030712;
+        }
+
+        /* FORCE CURSOR HIDDEN */
+        * { cursor: none !important; }
+
+        body {
+            background-color: var(--dark);
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1, h2 { font-family: 'Space Grotesk', sans-serif; }
+
+        /* --- 1. PRELOADER --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #030712; z-index: 999999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+        }
+        .loader-bar {
+            width: 200px; height: 2px; background: rgba(255,255,255,0.1); margin-top: 20px;
+            position: relative; overflow: hidden;
+        }
+        .loader-fill {
+            position: absolute; top: 0; left: 0; height: 100%; width: 0%;
+            background: var(--primary);
+            animation: load 1.5s ease-in-out forwards;
+        }
+        @keyframes load { 0% { width: 0%; } 100% { width: 100%; } }
+
+        /* --- CUSTOM CURSOR --- */
+        #cursor {
+            position: fixed; top: 0; left: 0; width: 30px; height: 30px;
+            border: 1px solid var(--primary); border-radius: 50%;
+            transform: translate(-50%, -50%); pointer-events: none; z-index: 9999;
+            transition: transform 0.1s ease-out, background 0.1s;
+            mix-blend-mode: exclusion;
+        }
+        #cursor-dot {
+            position: fixed; top: 0; left: 0; width: 6px; height: 6px;
+            background: var(--secondary); border-radius: 50%;
+            transform: translate(-50%, -50%); pointer-events: none; z-index: 10000;
+        }
+        .hovered {
+            transform: translate(-50%, -50%) scale(2.5) !important;
+            background: rgba(255, 255, 255, 0.1); border-color: transparent !important;
+        }
+
+        /* --- BACKGROUND --- */
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+        }
+        .bg-glow {
+            position: fixed; top: 50%; left: 50%; width: 60vw; height: 60vw;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+            transform: translate(-50%, -50%); filter: blur(100px); z-index: -1;
+        }
+
+        /* --- GLASS CARD --- */
+        .glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- ANIMATIONS --- */
+        .success-icon {
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0; transform: scale(0.5);
+            animation-delay: 2.2s; /* Wait for loader */
+        }
+        @keyframes popIn { 100% { opacity: 1; transform: scale(1); } }
+
+        .typewriter {
+            overflow: hidden; white-space: nowrap; border-right: 2px solid var(--secondary);
+            width: 0; animation: typing 1.5s steps(30, end) forwards, blink 0.8s step-end infinite;
+            animation-delay: 2.5s; /* Wait for loader */
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink { 50% { border-color: transparent } }
+
+        /* Initial Hide Content */
+        .content-reveal { opacity: 0; animation: fadeIn 1s ease-out forwards; animation-delay: 2s; }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="text-white font-mono text-xs tracking-[0.5em] mb-4">SENDING MESSAGE...</div>
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <div class="glass p-12 rounded-[3rem] text-center max-w-lg w-full relative overflow-hidden mx-6 content-reveal">
+        
+        <div class="success-icon w-24 h-24 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center mx-auto mb-8 text-green-400 shadow-[0_0_30px_rgba(74,222,128,0.2)]">
+            <i data-lucide="check" class="w-10 h-10"></i>
+        </div>
+
+        <h1 class="text-3xl md:text-4xl font-bold mb-4 flex justify-center">
+            <span class="typewriter">Message Sent Successfully.</span>
+        </h1>
+        
+        <p class="text-slate-400 mb-10 text-lg leading-relaxed">
+            Thank you for reaching out. I have received your message and will get back to you shortly.
+        </p>
+
+        <a href="index.html" class="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-black uppercase tracking-widest text-xs rounded-full hover:bg-indigo-500 hover:text-white transition-all duration-300 group">
+            <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+            Back to Home
+        </a>
+
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
+        <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50"></div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // PRELOADER
+        function removeLoader() {
+            const preloader = document.getElementById('preloader');
+            if(preloader) {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 800);
+            }
+        }
+        window.addEventListener('load', () => {
+            setTimeout(removeLoader, 1500); // 1.5s Wait
+        });
+
+        // CURSOR
+        const cursor = document.getElementById('cursor');
+        const dot = document.getElementById('cursor-dot');
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+        });
+        document.querySelectorAll('a').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awais Altaf | Elite Digital Engineering</title>
+    
+    <meta name="description" content="Portfolio of Awais Altaf - Computer Engineering Student & Digital Growth Specialist specializing in Google Ads, Lead Gen, and Web Dev.">
+    <meta property="og:title" content="Awais Altaf | Elite Digital Engineering">
+    <meta property="og:description" content="Engineering precision meets digital marketing performance. View my projects and credentials.">
+    <meta property="og:image" content="headshot.jpg">
+    <meta name="theme-color" content="#030712">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;700&display=swap');
+
+        :root { --primary: #6366f1; --secondary: #22d3ee; --dark: #030712; }
+
+        /* --- FORCE CURSOR HIDDEN (Remove this line if you want normal cursor on mobile) --- */
+        @media (min-width: 768px) { * { cursor: none !important; } }
+
+        body { background-color: var(--dark); color: #f3f4f6; font-family: 'Inter', sans-serif; overflow-x: hidden; position: relative; }
+        h1, h2, h3, .font-mono { font-family: 'Space Grotesk', sans-serif; }
+
+        /* --- CUSTOM SCROLLBAR (ELITE LOOK) --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #030712; }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 5px; border: 2px solid #030712; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        /* --- PRELOADER --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #030712; z-index: 999999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+        }
+        .loader-bar { width: 200px; height: 2px; background: rgba(255,255,255,0.1); margin-top: 20px; position: relative; overflow: hidden; }
+        .loader-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--primary); animation: load 2s ease-in-out forwards; }
+        @keyframes load { 0% { width: 0%; } 100% { width: 100%; } }
+
+        /* --- UTILS --- */
+        #progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 200; background: transparent; }
+        #progress-bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 0%; transition: width 0.1s; }
+        
+        #back-to-top {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
+            background: rgba(99, 102, 241, 0.2); border: 1px solid var(--primary); color: white;
+            display: flex; align-items: center; justify-content: center; z-index: 50; opacity: 0; pointer-events: none;
+            transition: all 0.3s ease; backdrop-filter: blur(5px);
+        }
+        #back-to-top.visible { opacity: 1; pointer-events: auto; }
+        #back-to-top:hover { background: var(--primary); transform: translateY(-5px); }
+
+        /* --- CURSOR & BG --- */
+        #cursor {
+            position: fixed; top: 0; left: 0; width: 30px; height: 30px;
+            border: 1px solid var(--primary); border-radius: 50%;
+            transform: translate(-50%, -50%); pointer-events: none; z-index: 99999;
+            transition: transform 0.15s ease-out, background 0.15s; mix-blend-mode: exclusion;
+        }
+        #cursor-dot {
+            position: fixed; top: 0; left: 0; width: 6px; height: 6px;
+            background: var(--secondary); border-radius: 50%;
+            transform: translate(-50%, -50%); pointer-events: none; z-index: 100000;
+        }
+        .hovered { transform: translate(-50%, -50%) scale(2.5) !important; background: rgba(255, 255, 255, 0.1); border-color: transparent !important; }
+
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px; mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+        }
+        .bg-glow-1 { position: fixed; top: -20%; left: -20%; width: 70vw; height: 70vw; background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 60%); filter: blur(80px); z-index: -1; animation: driftVertical 10s ease-in-out infinite alternate; }
+        .bg-glow-2 { position: fixed; bottom: -20%; right: -20%; width: 70vw; height: 70vw; background: radial-gradient(circle, rgba(34, 211, 238, 0.3) 0%, transparent 60%); filter: blur(80px); z-index: -1; animation: driftHorizontal 12s ease-in-out infinite alternate; }
+        @keyframes driftVertical { 0% { transform: translateY(0) scale(1); opacity: 0.4; } 100% { transform: translateY(200px) scale(1.1); opacity: 0.7; } }
+        @keyframes driftHorizontal { 0% { transform: translateX(0) scale(1); opacity: 0.3; } 100% { transform: translateX(-200px) scale(1.2); opacity: 0.6; } }
+
+        /* --- COMPONENTS --- */
+        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); transition: all 0.4s ease; }
+        .glass-card:hover { border-color: var(--primary); background: rgba(99, 102, 241, 0.1); transform: translateY(-8px); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2); }
+        
+        input, textarea { background: rgba(0,0,0,0.3) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important; }
+        input:focus, textarea:focus { border-color: var(--primary) !important; background: rgba(99, 102, 241, 0.1) !important; }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.23, 1, 0.32, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        .grad-border { position: relative; padding: 2px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 24px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 16px; overflow: hidden; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .nav-scrolled { background: rgba(3, 7, 18, 0.95) !important; border-bottom: 1px solid rgba(255,255,255,0.1); }
+
+        .tab-btn { border: 1px solid transparent; transition: all 0.3s ease; }
+        .tab-btn:hover { border-color: var(--primary); color: white; box-shadow: 0 0 15px rgba(99, 102, 241, 0.3); }
+        .tab-active { background: var(--primary) !important; color: white !important; border: 1px solid var(--primary) !important; box-shadow: 0 0 25px rgba(99, 102, 241, 0.6); font-weight: 900; }
+
+        /* --- GALLERY ARROWS --- */
+        .gallery-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.2); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; transition: all 0.2s; }
+        .gallery-nav:hover { background: var(--primary); border-color: var(--primary); }
+        .nav-prev { left: 10px; }
+        .nav-next { right: 10px; }
+        #gallery-img { transition: opacity 0.3s ease-in-out; opacity: 1; }
+        .fading { opacity: 0 !important; }
+
+        /* --- MOBILE MENU --- */
+        #mobile-menu { transform: translateY(-100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        #mobile-menu.open { transform: translateY(0); }
+    </style>
+</head>
+<body class="antialiased">
+    
+    <div id="preloader">
+        <div class="text-white font-mono text-xs tracking-[0.5em] mb-4">SYSTEM INITIALIZING...</div>
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+
+    <div id="progress-container"><div id="progress-bar"></div></div>
+    <div id="cursor" class="hidden md:block"></div>
+    <div id="cursor-dot" class="hidden md:block"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i data-lucide="arrow-up" class="w-6 h-6"></i></button>
+
+    <header id="navbar" class="fixed top-0 w-full z-[100] transition-all duration-500 px-6 py-4">
+        <nav class="max-w-7xl mx-auto flex items-center justify-between glass rounded-2xl px-6 py-3 relative z-[101] bg-[#0f172a]/80">
+            <a href="#" class="text-2xl font-bold tracking-tighter">AWAIS<span class="text-indigo-500">.</span></a>
+            
+            <div class="hidden md:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+                <a href="#about" class="hover:text-white transition">About</a>
+                <a href="#credentials" class="hover:text-white transition">Experience</a>
+                <a href="#projects" class="hover:text-white transition">Projects</a>
+                <a href="#contact" class="hover:text-white transition">Contact</a>
+            </div>
+
+            <a href="#contact" class="hidden md:block px-6 py-2 bg-white text-black text-xs font-black rounded-full hover:bg-indigo-500 hover:text-white transition border border-white">HIRE ME</a>
+            
+            <button class="md:hidden text-white z-[102]" onclick="toggleMobileMenu()">
+                <i data-lucide="menu"></i>
+            </button>
+        </nav>
+
+        <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-[90] flex flex-col items-center justify-center gap-8 text-xl font-bold uppercase tracking-widest md:hidden">
+            <a href="#about" onclick="toggleMobileMenu()" class="hover:text-indigo-500 transition">About</a>
+            <a href="#credentials" onclick="toggleMobileMenu()" class="hover:text-indigo-500 transition">Experience</a>
+            <a href="#projects" onclick="toggleMobileMenu()" class="hover:text-indigo-500 transition">Projects</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="hover:text-indigo-500 transition">Contact</a>
+            <button class="absolute top-8 right-8 text-slate-500" onclick="toggleMobileMenu()"><i data-lucide="x" class="w-8 h-8"></i></button>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="min-h-screen flex items-center pt-20 px-6">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+                <div class="reveal">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="h-[1px] w-12 bg-indigo-500"></span>
+                        <span class="text-xs font-black uppercase tracking-[0.3em] text-indigo-400" id="typewriter"></span>
+                    </div>
+                    <h1 class="text-6xl md:text-8xl font-bold leading-[0.85] tracking-tighter mb-8">
+                        Precision. <br><span class="text-indigo-500">Performance.</span>
+                    </h1>
+                    <p class="text-slate-400 text-lg max-w-lg mb-12 leading-relaxed">
+                        I apply Computer Engineering logic to high-scale digital marketing. Specializing in data-driven Lead Generation and technical Web Architecture.
+                    </p>
+                    <div class="flex items-center gap-6">
+                        <a href="#projects" class="group flex items-center gap-4 text-sm font-black uppercase tracking-widest border border-white/20 px-6 py-3 rounded-full hover:bg-white hover:text-black transition">
+                            <span class="w-8 h-8 rounded-full border border-current flex items-center justify-center"><i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                            View Work
+                        </a>
+                    </div>
+                </div>
+                <div class="relative reveal flex justify-center lg:justify-end">
+                    <div class="grad-border w-72 h-72 md:w-[450px] md:h-[450px]">
+                        <div class="bg-[#030712] rounded-[22px] w-full h-full overflow-hidden">
+                            <img src="headshot.jpg" alt="Awais Altaf" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition duration-700 grayscale hover:grayscale-0 scale-105 hover:scale-100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 px-6 border-t border-white/10">
+            <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="reveal glass glass-card p-6 rounded-2xl text-center">
+                    <h3 class="text-4xl font-bold mb-2 text-indigo-400">3+</h3>
+                    <p class="text-[10px] uppercase font-black tracking-widest text-slate-400">Industry Roles</p>
+                </div>
+                <div class="reveal glass glass-card p-6 rounded-2xl text-center" style="transition-delay: 0.1s">
+                    <h3 class="text-4xl font-bold mb-2 text-cyan-400">98%</h3>
+                    <p class="text-[10px] uppercase font-black tracking-widest text-slate-400">Client Satisfaction</p>
+                </div>
+                <div class="reveal glass glass-card p-6 rounded-2xl text-center" style="transition-delay: 0.2s">
+                    <h3 class="text-4xl font-bold mb-2 text-purple-400">5K$</h3>
+                    <p class="text-[10px] uppercase font-black tracking-widest text-slate-400">Monthly Ad Spend</p>
+                </div>
+                <div class="reveal glass glass-card p-6 rounded-2xl text-center" style="transition-delay: 0.3s">
+                    <h3 class="text-4xl font-bold mb-2 text-white">∞</h3>
+                    <p class="text-[10px] uppercase font-black tracking-widest text-slate-400">Passion for Tech</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="credentials" class="py-32 px-6 border-t border-white/10">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-20 reveal">
+                    <h2 class="text-5xl font-bold mb-4">Professional <span class="text-indigo-500">Timeline.</span></h2>
+                    <p class="text-slate-500">My journey through engineering and digital markets.</p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-12">
+                    <div class="lg:col-span-2 space-y-8 reveal">
+                        <h3 class="text-2xl font-bold mb-8 flex items-center gap-3"><i data-lucide="briefcase" class="text-indigo-400"></i> Work History</h3>
+
+                        <div class="glass glass-card p-8 rounded-[2rem] relative group">
+                            <div class="flex flex-col md:flex-row justify-between items-start mb-4">
+                                <div>
+                                    <h4 class="text-2xl font-bold text-white group-hover:text-indigo-400 transition">Lead Gen Specialist</h4>
+                                    <p class="text-slate-400 font-mono text-sm mt-1">Company Go Business Sol</p>
+                                </div>
+                                <div class="flex flex-col items-end gap-3 mt-2 md:mt-0">
+                                    <span class="px-4 py-1.5 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase tracking-widest rounded-full">Sep 2025 - Present</span>
+                                    <button onclick="openModal('Lead Gen Specialist', 'Company Go Business Sol', 'Certificate not available.')" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/20 bg-white/5 hover:bg-indigo-600 hover:border-indigo-600 transition text-[10px] font-bold uppercase tracking-widest text-slate-300 hover:text-white">
+                                        <i data-lucide="file-check" class="w-3 h-3"></i> View Certificate
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-slate-400 leading-relaxed text-sm">Spearheading Google Ads and Meta Ads campaigns. Implemented GA4 and GTM for precision tracking.</p>
+                        </div>
+
+                        <div class="glass glass-card p-8 rounded-[2rem] relative group">
+                            <div class="flex flex-col md:flex-row justify-between items-start mb-4">
+                                <div>
+                                    <h4 class="text-2xl font-bold text-white group-hover:text-cyan-400 transition">Content Writer Intern</h4>
+                                    <p class="text-slate-400 font-mono text-sm mt-1">GAOTek Inc.</p>
+                                </div>
+                                <div class="flex flex-col items-end gap-3 mt-2 md:mt-0">
+                                    <span class="px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-black uppercase tracking-widest rounded-full">Jul 2025 - Oct 2025</span>
+                                    <button onclick="openCertificate('Internship Certificates', 'GAOTek Inc.', ['https://drive.google.com/thumbnail?id=1dlIVsidnCMKATNGJ5pVYN68Jf_KEjkkl&sz=w1000','https://drive.google.com/thumbnail?id=1LpGm2PA2Y_TAD6M_gQhDVi2IrTNa4-rL&sz=w1000','https://drive.google.com/thumbnail?id=1gYbNKtaclhbXS_pAPtiZfn2h2vDW4hSd&sz=w1000'])" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/20 bg-white/5 hover:bg-cyan-600 hover:border-cyan-600 transition text-[10px] font-bold uppercase tracking-widest text-slate-300 hover:text-white">
+                                        <i data-lucide="file-check" class="w-3 h-3"></i> View Certificates
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-slate-400 leading-relaxed text-sm">Produced technical content and documentation for IoT and engineering products.</p>
+                        </div>
+
+                         <div class="glass glass-card p-8 rounded-[2rem] relative group">
+                            <div class="flex flex-col md:flex-row justify-between items-start mb-4">
+                                <div>
+                                    <h4 class="text-2xl font-bold text-white group-hover:text-purple-400 transition">Customer Service Representative</h4>
+                                    <p class="text-slate-400 font-mono text-sm mt-1">Typhoon Leads</p>
+                                </div>
+                                <div class="flex flex-col items-end gap-3 mt-2 md:mt-0">
+                                    <span class="px-4 py-1.5 bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-black uppercase tracking-widest rounded-full">Jun 2023 - Aug 2023</span>
+                                    <button onclick="openModal('CSR', 'Typhoon Leads', 'Certificate not available.')" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/20 bg-white/5 hover:bg-purple-600 hover:border-purple-600 transition text-[10px] font-bold uppercase tracking-widest text-slate-300 hover:text-white">
+                                        <i data-lucide="file-check" class="w-3 h-3"></i> View Certificate
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-slate-400 leading-relaxed text-sm">Managed client communications and outbound lead qualification processes.</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-12 reveal" style="transition-delay: 0.2s">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-8 flex items-center gap-3"><i data-lucide="graduation-cap" class="text-secondary"></i> Education</h3>
+                            <div class="glass glass-card p-8 rounded-[2rem] relative group cursor-default">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2 block">2023 - 2027</span>
+                                <h4 class="text-xl font-bold text-white mb-1 group-hover:text-cyan-400 transition">B.Eng Computer Engineering</h4>
+                                <p class="text-indigo-400 text-sm font-bold">CUST</p>
+                                <p class="text-slate-500 text-xs mt-4">Capital University of Science & Technology</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-2xl font-bold mb-8 flex items-center gap-3"><i data-lucide="award" class="text-yellow-500"></i> Certificates</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-4 p-4 glass glass-card rounded-2xl transition group cursor-pointer" onclick="openCertificate('Google Ads Course', 'Innovista', 'https://drive.google.com/thumbnail?id=1rBaGcKeLeBzntIZfk_74vTIGm2q4IqWC&sz=w1000')">
+                                    <div class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400"><i data-lucide="check-circle"></i></div>
+                                    <div><p class="font-bold text-sm text-slate-200">Google Ads</p><p class="text-[10px] uppercase font-bold text-slate-500">Innovista</p></div>
+                                </div>
+                                <div class="flex items-center gap-4 p-4 glass glass-card rounded-2xl transition group cursor-pointer" onclick="openCertificate('Digital Marketing Course', 'Innovista', 'https://drive.google.com/thumbnail?id=1a6IWjfEcqTE5OtVEV5OQgI6iABHE5od_&sz=w1000')">
+                                    <div class="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-400"><i data-lucide="check-circle"></i></div>
+                                    <div><p class="font-bold text-sm text-slate-200">Digital Marketing</p><p class="text-[10px] uppercase font-bold text-slate-500">Innovista</p></div>
+                                </div>
+                                <div class="flex items-center gap-4 p-4 glass glass-card rounded-2xl transition group cursor-pointer" onclick="openCertificate('Content Writing Course', 'Innovista', 'https://drive.google.com/thumbnail?id=1oluaQv9Q15sVwZpvya00Bq7o1MHkUZ_K&sz=w1000')">
+                                    <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400"><i data-lucide="check-circle"></i></div>
+                                    <div><p class="font-bold text-sm text-slate-200">Content Writing</p><p class="text-[10px] uppercase font-bold text-slate-500">Innovista</p></div>
+                                </div>
+                                <a href="certificates.html" class="flex items-center justify-center gap-2 p-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 transition group cursor-pointer shadow-lg shadow-indigo-600/20 w-full mt-4 border border-indigo-400">
+                                    <span class="text-xs font-black uppercase tracking-widest text-white">View All 16+ Certificates</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 text-white group-hover:translate-x-1 transition-transform"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-32 px-6 border-t border-white/10">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8 reveal">
+                    <div>
+                        <h2 class="text-5xl font-bold mb-4">Selected <span class="text-indigo-500">Works.</span></h2>
+                        <p class="text-slate-500">Proof of technical and strategic excellence.</p>
+                    </div>
+                    <div class="flex p-1.5 glass rounded-2xl overflow-x-auto max-w-full">
+                        <button onclick="filterProjects('marketing')" id="btn-marketing" class="tab-btn px-8 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition tab-active whitespace-nowrap">Marketing</button>
+                        <button onclick="filterProjects('web')" id="btn-web" class="tab-btn px-8 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition text-slate-500 whitespace-nowrap">Development</button>
+                        <button onclick="filterProjects('engineering')" id="btn-engineering" class="tab-btn px-8 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition text-slate-500 whitespace-nowrap">Engineering</button>
+                    </div>
+                </div>
+
+                <div id="gallery-marketing" class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 reveal">
+                    <div class="glass glass-card p-6 rounded-[2.5rem] cursor-pointer group" onclick="openModal('Google Ads Mastery', 'Lead Generation', 'Scaled lead acquisition for Go Business Sol.')">
+                        <div class="h-64 rounded-[2rem] bg-indigo-900/10 mb-8 flex items-center justify-center relative overflow-hidden border border-white/5"><i data-lucide="bar-chart-3" class="w-16 h-16 text-indigo-500/50 group-hover:scale-125 transition duration-700"></i></div>
+                        <h4 class="text-2xl font-bold mb-2">Campaign Optimization</h4><div class="flex gap-2"><span class="text-[10px] font-bold text-slate-500 border border-white/20 px-2 py-1 rounded">GOOGLE ADS</span></div>
+                    </div>
+                    <div class="glass glass-card p-6 rounded-[2.5rem] cursor-pointer group" onclick="openModal('Meta Ads Strategy', 'Social Media', 'High-ROI Meta ad campaigns focusing on B2B lead gen.')">
+                        <div class="h-64 rounded-[2rem] bg-indigo-900/10 mb-8 flex items-center justify-center relative overflow-hidden border border-white/5"><i data-lucide="trending-up" class="w-16 h-16 text-indigo-500/50 group-hover:scale-125 transition duration-700"></i></div>
+                        <h4 class="text-2xl font-bold mb-2">Meta Scaling</h4><div class="flex gap-2"><span class="text-[10px] font-bold text-slate-500 border border-white/20 px-2 py-1 rounded">FACEBOOK</span></div>
+                    </div>
+                    <div class="glass glass-card p-6 rounded-[2.5rem] cursor-pointer group" onclick="openModal('GTM Tracking Setup', 'Analytics', 'Advanced server-side tracking setup using GTM and GA4.')">
+                        <div class="h-64 rounded-[2rem] bg-indigo-900/10 mb-8 flex items-center justify-center relative overflow-hidden border border-white/5"><i data-lucide="activity" class="w-16 h-16 text-indigo-500/50 group-hover:scale-125 transition duration-700"></i></div>
+                        <h4 class="text-2xl font-bold mb-2">Precision Analytics</h4><div class="flex gap-2"><span class="text-[10px] font-bold text-slate-500 border border-white/20 px-2 py-1 rounded">GA4 / GTM</span></div>
+                    </div>
+                </div>
+
+                <div id="gallery-web" class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 hidden reveal">
+                    <div class="glass glass-card p-6 rounded-[2.5rem] cursor-pointer group" onclick="openModal('Elite Artist Portfolio', 'Web Architecture', 'Designed and coded a high-end visual solution.')">
+                        <div class="h-64 rounded-[2rem] bg-cyan-900/10 mb-8 flex items-center justify-center relative overflow-hidden border border-white/5"><i data-lucide="code-2" class="w-16 h-16 text-cyan-500/50 group-hover:scale-125 transition duration-700"></i></div>
+                        <h4 class="text-2xl font-bold mb-2">Portfolio Development</h4><div class="flex gap-2"><span class="text-[10px] font-bold text-slate-500 border border-white/20 px-2 py-1 rounded">TAILWIND</span></div>
+                    </div>
+                    <div class="glass glass-card p-6 rounded-[2.5rem] cursor-pointer group" onclick="openModal('SaaS Landing Page', 'Frontend Dev', 'High-conversion landing page for a tech startup.')">
+                        <div class="h-64 rounded-[2rem] bg-cyan-900/10 mb-8 flex items-center justify-center relative overflow-hidden border border-white/5"><i data-lucide="layout" class="w-16 h-16 text-cyan-500/50 group-hover:scale-125 transition duration-700"></i></div>
+                        <h4 class="text-2xl font-bold mb-2">SaaS Interface</h4><div class="flex gap-2"><span class="text-[10px] font-bold text-slate-500 border border-white/20 px-2 py-1 rounded">REACT</span></div>
+                    </div>
+                    <div class="glass glass-card p-6 rounded-[2.5rem] cursor-pointer group" onclick="openModal('E-commerce Dashboard', 'Web App', 'Admin dashboard for managing inventory and sales data.')">
+                        <div class="h-64 rounded-[2rem] bg-cyan-900/10 mb-8 flex items-center justify-center relative overflow-hidden border border-white/5"><i data-lucide="monitor" class="w-16 h-16 text-cyan-500/50 group-hover:scale-125 transition duration-700"></i></div>
+                        <h4 class="text-2xl font-bold mb-2">Admin Dashboard</h4><div class="flex gap-2"><span class="text-[10px] font-bold text-slate-500 border border-white/20 px-2 py-1 rounded">JS</span></div>
+                    </div>
+                </div>
+
+                <div id="gallery-engineering" class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 hidden reveal">
+                    <div class="glass glass-card p-6 rounded-[2.5rem] cursor-pointer group" onclick="openModal('Hardware Interface', 'Computer Engineering', 'Integrated hardware sensors with a web-based monitoring dashboard.')">
+                        <div class="h-64 rounded-[2rem] bg-purple-900/10 mb-8 flex items-center justify-center relative overflow-hidden border border-white/5"><i data-lucide="cpu" class="w-16 h-16 text-purple-500/50 group-hover:scale-125 transition duration-700"></i></div>
+                        <h4 class="text-2xl font-bold mb-2">Embedded Systems</h4><div class="flex gap-2"><span class="text-[10px] font-bold text-slate-500 border border-white/20 px-2 py-1 rounded">C++</span></div>
+                    </div>
+                    <div class="glass glass-card p-6 rounded-[2.5rem] cursor-pointer group" onclick="openModal('IoT Smart Sensor', 'IoT Engineering', 'Wi-Fi enabled temperature and humidity sensor for home automation.')">
+                        <div class="h-64 rounded-[2rem] bg-purple-900/10 mb-8 flex items-center justify-center relative overflow-hidden border border-white/5"><i data-lucide="wifi" class="w-16 h-16 text-purple-500/50 group-hover:scale-125 transition duration-700"></i></div>
+                        <h4 class="text-2xl font-bold mb-2">IoT Network</h4><div class="flex gap-2"><span class="text-[10px] font-bold text-slate-500 border border-white/20 px-2 py-1 rounded">PYTHON</span></div>
+                    </div>
+                    <div class="glass glass-card p-6 rounded-[2.5rem] cursor-pointer group" onclick="openModal('Robotics Control Logic', 'Robotics', 'Pathfinding algorithm implementation for autonomous vehicles.')">
+                        <div class="h-64 rounded-[2rem] bg-purple-900/10 mb-8 flex items-center justify-center relative overflow-hidden border border-white/5"><i data-lucide="bot" class="w-16 h-16 text-purple-500/50 group-hover:scale-125 transition duration-700"></i></div>
+                        <h4 class="text-2xl font-bold mb-2">Robotics AI</h4><div class="flex gap-2"><span class="text-[10px] font-bold text-slate-500 border border-white/20 px-2 py-1 rounded">ARDUINO</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-32 px-6 border-t border-white/10">
+            <div class="max-w-7xl mx-auto">
+                <div class="glass p-12 md:p-20 rounded-[4rem] relative overflow-hidden reveal">
+                    <div class="grid lg:grid-cols-2 gap-20 items-start relative z-10">
+                        <div>
+                            <h2 class="text-6xl md:text-8xl font-bold leading-[0.85] mb-8">Ready to <br><span class="text-indigo-500 text-7xl md:text-9xl">Execute?</span></h2>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="https://wa.me/923185152730" target="_blank" class="w-14 h-14 glass rounded-2xl flex items-center justify-center hover:bg-green-500 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.008-.57-.008-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+                                <a href="https://linkedin.com/in/mr-awais-altaf/" target="_blank" class="w-14 h-14 glass rounded-2xl flex items-center justify-center hover:bg-blue-600 transition-all"><i data-lucide="linkedin"></i></a>
+                                <a href="https://www.upwork.com/freelancers/~0140c3440a91b7f338?mp_source=share" target="_blank" class="w-14 h-14 glass rounded-2xl flex items-center justify-center hover:bg-green-600 transition-all font-black text-xs">Up</a>
+                                <a href="mailto:mr.awaisaltaf@gmail.com" class="w-14 h-14 glass rounded-2xl flex items-center justify-center hover:bg-red-500 transition-all"><i data-lucide="mail"></i></a>
+                                <a href="https://github.com/rawaisr" target="_blank" class="w-14 h-14 glass rounded-2xl flex items-center justify-center hover:bg-white hover:text-black transition-all"><i data-lucide="github"></i></a>
+                            </div>
+                        </div>
+                        <form id="contact-form" action="https://formspree.io/f/mojagako" method="POST" class="space-y-10">
+                            <input type="hidden" name="_next" value="success.html">
+                            <div class="group border-b border-white/10 focus-within:border-indigo-500 transition-all"><label class="text-[10px] font-black uppercase tracking-widest text-slate-500">Name</label><input type="text" name="name" required class="w-full bg-transparent py-4 text-white outline-none placeholder:text-slate-800"></div>
+                            <div class="group border-b border-white/10 focus-within:border-indigo-500 transition-all"><label class="text-[10px] font-black uppercase tracking-widest text-slate-500">Email</label><input type="email" name="email" required class="w-full bg-transparent py-4 text-white outline-none placeholder:text-slate-800"></div>
+                            <div class="group border-b border-white/10 focus-within:border-indigo-500 transition-all"><label class="text-[10px] font-black uppercase tracking-widest text-slate-500">Message</label><textarea name="message" rows="3" required class="w-full bg-transparent py-4 text-white outline-none placeholder:text-slate-800 resize-none"></textarea></div>
+                            <button id="submit-btn" class="px-12 py-5 bg-white text-black font-black uppercase tracking-widest text-xs rounded-2xl hover:bg-indigo-500 hover:text-white transition-all">Send Message</button>
+                            <div id="form-response" class="text-sm font-bold"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="modal" class="fixed inset-0 bg-black/95 z-[200] hidden items-center justify-center p-6 backdrop-blur-3xl" onclick="closeModal()">
+        <div class="max-w-6xl w-full glass rounded-[3rem] p-10 relative" onclick="event.stopPropagation()">
+            <button onclick="closeModal()" class="absolute top-10 right-10 text-slate-500 hover:text-white transition transform hover:rotate-90 duration-300"><i data-lucide="x"></i></button>
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div id="modal-visual" class="rounded-3xl overflow-hidden shadow-2xl relative h-[300px] md:h-[450px] bg-black/50 flex items-center justify-center"></div>
+                <div>
+                    <span id="modal-type" class="text-indigo-400 text-xs font-black uppercase tracking-widest mb-4 block"></span>
+                    <h3 id="modal-title" class="text-3xl md:text-5xl font-bold mb-6"></h3>
+                    <p id="modal-desc" class="text-slate-400 text-lg leading-relaxed"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-20 text-center text-slate-700 text-[10px] font-black uppercase tracking-[0.5em]">
+        © 2025 Awais Altaf — Optimized for Excellence. All rights reserved.
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // UTILS
+        function removeLoader() { document.getElementById('preloader').style.opacity='0'; setTimeout(()=> { document.getElementById('preloader').style.display='none'; typeWriter(); }, 800); }
+        window.addEventListener('load', () => setTimeout(removeLoader, 2000));
+
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
+
+        // MOUSE & SCROLL
+        const cursor = document.getElementById('cursor'), dot = document.getElementById('cursor-dot');
+        window.addEventListener('mousemove', e => { cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px'; dot.style.left = e.clientX+'px'; dot.style.top = e.clientY+'px'; });
+        document.querySelectorAll('a, button').forEach(el => { el.addEventListener('mouseenter', () => cursor.classList.add('hovered')); el.addEventListener('mouseleave', () => cursor.classList.remove('hovered')); });
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar'), back = document.getElementById('back-to-top');
+            document.getElementById("progress-bar").style.width = ((document.body.scrollTop || document.documentElement.scrollTop) / (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * 100 + "%";
+            window.scrollY > 50 ? nav.classList.add('nav-scrolled') : nav.classList.remove('nav-scrolled');
+            window.scrollY > 500 ? back.classList.add('visible') : back.classList.remove('visible');
+        });
+
+        // TYPEWRITER
+        const text = "Digital Growth Engineer_"; let i = 0;
+        function typeWriter() { if (i < text.length) { document.getElementById('typewriter').innerHTML += text.charAt(i); i++; setTimeout(typeWriter, 100); } }
+
+        // FILTERS & OBSERVERS
+        const observer = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('active')), { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        function filterProjects(id) {
+            ['marketing','web','engineering'].forEach(cat => document.getElementById('gallery-'+cat).classList.add('hidden'));
+            document.getElementById('gallery-'+id).classList.remove('hidden');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active','text-white'));
+            document.getElementById('btn-'+id).classList.add('tab-active','text-white');
+        }
+
+        // MODALS
+        const modal = document.getElementById('modal'), modalVis = document.getElementById('modal-visual');
+        let certImages = [], certIndex = 0;
+
+        function openModal(title, type, desc, videoUrl=null) {
+            setupModal(title, type, desc);
+            modalVis.innerHTML = videoUrl ? `<div class="video-wrapper w-full h-full"><iframe src="https://www.youtube.com/embed/${videoUrl.split('v=')[1]}?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe></div>` : `<div class="text-slate-400 italic text-center p-6 text-xl">${desc}</div>`;
+        }
+
+        function openCertificate(title, provider, content) {
+            setupModal(title, provider, "Verified Credential. Click arrows to navigate if available.");
+            if(Array.isArray(content)) {
+                certImages = content; certIndex = 0;
+                updateGallery();
+            } else {
+                modalVis.innerHTML = `<img src="${content}" class="w-full h-full object-contain">`;
+            }
+        }
+
+        function setupModal(title, type, desc) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-type').textContent = type;
+            document.getElementById('modal-desc').textContent = desc;
+            modal.classList.replace('hidden', 'flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function updateGallery() {
+            modalVis.innerHTML = `
+                <button class="gallery-nav nav-prev" onclick="navCert(-1)"><i data-lucide="chevron-left"></i></button>
+                <img id="gallery-img" src="${certImages[certIndex]}" class="w-full h-full object-contain">
+                <button class="gallery-nav nav-next" onclick="navCert(1)"><i data-lucide="chevron-right"></i></button>`;
+            lucide.createIcons();
+        }
+
+        function navCert(step) {
+            const img = document.getElementById('gallery-img');
+            img.classList.add('fading');
+            setTimeout(() => {
+                certIndex = (certIndex + step + certImages.length) % certImages.length;
+                img.src = certImages[certIndex];
+                img.onload = () => img.classList.remove('fading');
+            }, 200);
+        }
+
+        function closeModal() { modal.classList.replace('flex', 'hidden'); document.body.style.overflow = 'auto'; }
+
+        // CONTACT FORM
+        const form = document.getElementById('contact-form');
+        if(form) form.addEventListener('submit', async e => {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn'), res = document.getElementById('form-response');
+            btn.textContent = "EXECUTING..."; btn.disabled = true;
+            try {
+                const r = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: {'Accept': 'application/json'} });
+                if(r.ok) window.location.href = "success.html";
+                else { res.textContent = "ERROR: LINK FAILURE."; res.className = "text-red-500 font-bold mt-4"; btn.textContent = "SEND MESSAGE"; btn.disabled = false; }
+            } catch { res.textContent = "ERROR: NETWORK OFFLINE."; btn.textContent = "SEND MESSAGE"; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>
